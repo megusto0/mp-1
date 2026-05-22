@@ -15,16 +15,18 @@ x0 = (0, 0), eps = 1e-4
 - для метода Хука-Дживса использовать метод деления отрезка пополам для одномерного поиска шага;
 - показать последовательность симплексов и последовательные приближения `{x_k}`.
 
-## Colab
+## Состав работы
 
-После публикации репозитория на GitHub ноутбуки открываются по ссылкам:
+Ноутбуки самодостаточны: в Google Colab они запускаются напрямую, без команд клонирования репозитория.
 
-- [01_analysis.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/01_analysis.ipynb)
-- [02_nelder_mead.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/02_nelder_mead.ipynb)
-- [03_hooke_jeeves.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/03_hooke_jeeves.ipynb)
-- [04_steepest_descent.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/04_steepest_descent.ipynb)
-- [05_fletcher_reeves.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/05_fletcher_reeves.ipynb)
-- [06_comparison.ipynb](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/06_comparison.ipynb)
+| № | Тема | Ноутбук | Colab |
+|---|------|---------|-------|
+| 01 | Аналитическое исследование функции | [`01_analysis.ipynb`](notebooks/01_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/01_analysis.ipynb) |
+| 02 | Метод Нелдера-Мида | [`02_nelder_mead.ipynb`](notebooks/02_nelder_mead.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/02_nelder_mead.ipynb) |
+| 03 | Метод Хука-Дживса | [`03_hooke_jeeves.ipynb`](notebooks/03_hooke_jeeves.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/03_hooke_jeeves.ipynb) |
+| 04 | Метод наискорейшего спуска | [`04_steepest_descent.ipynb`](notebooks/04_steepest_descent.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/04_steepest_descent.ipynb) |
+| 05 | Метод Флетчера-Ривса | [`05_fletcher_reeves.ipynb`](notebooks/05_fletcher_reeves.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/05_fletcher_reeves.ipynb) |
+| 06 | Сравнение методов | [`06_comparison.ipynb`](notebooks/06_comparison.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/megusto0/mp-1/blob/master/notebooks/06_comparison.ipynb) |
 
 ## Локальный запуск
 
@@ -53,5 +55,5 @@ src/gradient_methods.py    наискорейший спуск и Флетчер
 src/plotting.py            общая визуализация
 scripts/generate_artifacts.py
 scripts/generate_notebooks.py
-notebooks/*.ipynb
+notebooks/*.ipynb         самодостаточные ноутбуки с Colab-кнопками
 ```

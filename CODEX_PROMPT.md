@@ -42,7 +42,7 @@ Expected result:
    - `04_steepest_descent.ipynb`
    - `05_fletcher_reeves.ipynb`
    - `06_comparison.ipynb`
-3. Each notebook must run locally and in Google Colab. Add a Colab bootstrap cell that clones `megusto0/mp-1` only when running inside Colab.
+3. Each notebook must run locally and in Google Colab. Do not clone the repository from inside notebooks. Make notebooks standalone by placing the required imports, target function, method implementation, table generation and plotting code directly in the notebook.
 4. Generate report artifacts:
    - `figures/*.png`
    - `tables/*.csv`
@@ -66,7 +66,7 @@ python -m py_compile src/*.py scripts/*.py build_report.py build_template.py
 
 Acceptance criteria:
 
-- all notebooks exist and contain executable code cells;
+- all notebooks exist, contain executable code cells, start with an `Open in Colab` badge, and do not contain repository-cloning commands;
 - all required figures and tables are produced;
 - `report_v16.docx` opens and has no unresolved `[[FIG:...]]`, `[[TBL:...]]`, `[[CODE:...]]`, or `[[VAL:...]]` placeholders except intentionally unresolved manual page numbers if Word pagination is edited later;
 - the final answer lists generated files and verification commands.
