@@ -13,6 +13,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from PIL import Image
 from docx import Document
 from docx.shared import Pt, Cm, Mm
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_TAB_LEADER
@@ -26,6 +27,11 @@ SZ = Pt(14)
 SZ_SMALL = Pt(12)
 ROOT = Path(__file__).parent
 FORMULA_DIR = ROOT / "formula_images"
+MAX_FORMULA_WIDTH = Cm(11.5)
+plt.rcParams.update({
+    "mathtext.fontset": "stix",
+    "font.family": "STIXGeneral",
+})
 
 
 def set_run(run, text, *, bold=False, italic=False, size=SZ, font=FONT, mono=False):
@@ -106,21 +112,31 @@ def add_placeholder(doc, text):
     return p
 
 
-def render_formula(latex, *, fontsize=18):
+def render_formula(latex, *, fontsize=15):
     """Render a mathtext/LaTeX-like formula to a transparent PNG."""
     FORMULA_DIR.mkdir(exist_ok=True)
-    digest = hashlib.sha1(latex.encode("utf-8")).hexdigest()[:16]
+    digest = hashlib.sha1(f"stix-{fontsize}-{latex}".encode("utf-8")).hexdigest()[:16]
     path = FORMULA_DIR / f"formula_{digest}.png"
     if path.exists():
         return path
 
     # Matplotlib mathtext does not require an external TeX installation and is
     # stable on clean Windows machines. Matrix-like expressions use \substack.
-    fig = plt.figure(figsize=(9.0, 1.15), dpi=300)
+    fig = plt.figure(figsize=(8.0, 1.0), dpi=300)
     fig.text(0.5, 0.5, f"${latex}$", ha="center", va="center", fontsize=fontsize)
     fig.savefig(path, transparent=True, bbox_inches="tight", pad_inches=0.04)
     plt.close(fig)
     return path
+
+
+def add_formula_picture(run, formula_path):
+    with Image.open(formula_path) as img:
+        dpi = img.info.get("dpi", (300, 300))[0] or 300
+        native_width_cm = img.size[0] / dpi * 2.54
+    if native_width_cm > MAX_FORMULA_WIDTH.cm:
+        run.add_picture(str(formula_path), width=MAX_FORMULA_WIDTH)
+    else:
+        run.add_picture(str(formula_path))
 
 
 def add_formula(doc, latex, *, number=None):
@@ -137,13 +153,14 @@ def add_formula(doc, latex, *, number=None):
         pf.tab_stops.add_tab_stop(Cm(16.0), WD_TAB_ALIGNMENT.RIGHT)
         p.add_run("\t")
         run = p.add_run()
-        run.add_picture(str(formula_path))
-        run2 = p.add_run(f"\t({number})")
-        set_run(run2, "\t" + f"({number})")
+        add_formula_picture(run, formula_path)
+        p.add_run("\t")
+        run2 = p.add_run(f"({number})")
+        set_run(run2, f"({number})")
     else:
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run()
-        run.add_picture(str(formula_path))
+        add_formula_picture(run, formula_path)
     return p
 
 
